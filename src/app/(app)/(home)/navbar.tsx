@@ -2,11 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { Poppins } from "next/font/google";
 import Link from "next/link";
 import Sidebar from "./sibar";
 import { useState } from "react";
 import { MenuIcon } from "lucide-react";
+import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -76,14 +76,14 @@ const Navbar = () => {
           variant="secondary"
           className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white hover:bg-green-200 transition-colors text-lg"
         >
-          <Link href="/sign-in">Login</Link>
+          <Link prefetch href="/sign-in">Login</Link>
         </Button>
         <Button
           asChild
           variant="secondary"
           className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none text-white bg-black hover:bg-white hover:text-black transition-colors text-lg"
         >
-          <Link href="/sign-up">Start Selling</Link>
+          <Link prefetch href="/sign-up">Start Selling</Link>
         </Button>
       </div>
       <div className="flex lg:hidden items-center justify-center">

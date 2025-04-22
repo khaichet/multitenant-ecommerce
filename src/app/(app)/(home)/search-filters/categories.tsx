@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 
 import { ListFilterIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 interface Props {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({ data }: Props) => {
@@ -51,6 +52,7 @@ export const Categories = ({ data }: Props) => {
 
     return () => resizeObserver.disconnect();
   }, [data.length]);
+
   return (
     <div className="relative w-full">
       <CategoriesSidebar

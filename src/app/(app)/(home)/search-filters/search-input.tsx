@@ -1,16 +1,22 @@
 "use client"
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { ListFilterIcon, SearchIcon } from "lucide-react";
+import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { Button } from "@/components/ui/button";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 interface Props {
   disabled?: boolean;
-  data: CategoriesGetManyOutput[1]
+  data?: CategoriesGetManyOutput[1]
 }
-export const SearchInPut = ({ disabled, data }: Props) => {
+export const SearchInPut = ({ disabled }: Props) => {
+
+  const trpc = useTRPC()
+  const session = useQuery(trpc.auth.session.queryOptions())
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
@@ -30,6 +36,16 @@ export const SearchInPut = ({ disabled, data }: Props) => {
         onClick={() => setIsSidebarOpen(true)}>
         <ListFilterIcon />
       </Button>
-    </div>
+
+      {session.data?.user && (
+
+        <Button asChild variant="elevated">
+          <Link href="/library">
+            <BookmarkCheckIcon className="mr-2" />
+            Library
+          </Link>
+        </Button>
+      )}
+    </div >
   );
 };

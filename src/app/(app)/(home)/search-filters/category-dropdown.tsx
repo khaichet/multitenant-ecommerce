@@ -34,7 +34,7 @@ export const CategoryDropdown = ({
   const dropdownPosition = getDropdownPosition();
 
   const toggleDropdown = () => {
-    if (category.subcategories?.docs?.length) {
+    if (category.subcategories?.length) {
       setIsOpen(!isOpen)
 
     }
@@ -70,12 +70,12 @@ export const CategoryDropdown = ({
             )}
           />
         )}
+        <SubcategoryMenu
+          category={category}
+          isOpen={isOpen}
+          position={dropdownPosition}
+        />
       </div>
-      <SubcategoryMenu
-        category={category}
-        isOpen={isOpen}
-        position={dropdownPosition}
-      />
     </div>
   );
 };

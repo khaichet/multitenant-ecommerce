@@ -5,7 +5,8 @@ import { TRPCError } from "@trpc/server";
 import { headers as getHeaders, cookies as getCookies } from "next/headers"
 import { z } from "zod";
 import { AUTH_COOKIE } from "../constants";
-import { registerSchema, loginSchema } from "../ui/schemas";
+import { registerSchema, loginSchema } from "../schemas";
+import { generateAuthCookie } from '../utils';
 
 export const authRouter = createTRPCRouter({
     session: baseProcedure.query(async ({ ctx }) => {
@@ -70,16 +71,20 @@ export const authRouter = createTRPCRouter({
                 })
             }
 
-            const cookies = await getCookies()
-            cookies.set({
-                name: AUTH_COOKIE,
-                value: data.token,
-                httpOnly: true,
-                path: "/",
-                sameSite: "none",
-                secure: true
-
+            await generateAuthCookie({
+                prefix: ctx.db.config.cookiePrefix,
+                value: data.token
             })
+            // const cookies = await getCookies()
+            // cookies.set({
+            //     name: `${ctx.db.config.cookiePrefix}-token`,
+            //     value: data.token,
+            //     httpOnly: true,
+            //     path: "/",
+            //     // sameSite: "none",
+            //     // secure: true
+
+            // })
 
             return data
         })

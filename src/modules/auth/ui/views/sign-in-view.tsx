@@ -6,14 +6,14 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { loginSchema } from "../schemas"
+import { loginSchema } from "../../schemas"
 import { z } from "zod"
 import Link from "next/link"
 import { toast } from "sonner"
 import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils"
 import { useTRPC } from "@/trpc/client"
-import { useMutation } from "@tanstack/react-query"
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import { error } from "console"
 import { useRouter } from "next/navigation"
 const poppins = Poppins({
@@ -27,11 +27,13 @@ export const SignInView = () => {
     const router = useRouter()
 
     const trpc = useTRPC()
+    const queryClient = useQueryClient()
     const login = useMutation(trpc.auth.login.mutationOptions({
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess: () => {
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
             router.push("/")
         }
     }))

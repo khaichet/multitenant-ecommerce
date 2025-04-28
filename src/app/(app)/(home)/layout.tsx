@@ -3,8 +3,8 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 
-import Footer from "./footer";
-import Navbar from "./navbar";
+import Footer from "../../../modules/home/ui/components/footer";
+import Navbar from "../../../modules/home/ui/components/navbar";
 import { SearchFilters, SearchFiltersLoading } from "./search-filters";
 import { Category } from "@/payload-types";
 import { getQueryClient, trpc } from "@/trpc/server";
